@@ -1464,7 +1464,28 @@ function renderAdmin(tab){
         <div class="row"><span class="k">TikTok</span><span class="v"><a href="${tlink}" target="_blank" rel="noopener">${escapeHtml(o.tiktok)}</a></span></div>
         <div class="row"><span class="k">Трек</span><span class="v">${escapeHtml(o.track)}</span></div>
         <div class="idea">💡 ${escapeHtml(o.idea)}</div>
-        ${o.code ? `<div class="order-code">Код: ${o.code}</div>` : ''}
+        ${o.code ? `<div class="order-code">Код: ${o.code}</<script>
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function nowDate(){
+  const n = new Date();
+  return String(n.getDate()).padStart(2,'0') + '.' + String(n.getMonth()+1).padStart(2,'0') + '.' + n.getFullYear() + ' в ' + String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
+}
+function load(k, d){ try{ const r = localStorage.getItem(k); if(r) return JSON.parse(r); }catch(e){} return d; }
+function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+function showMsg(el, text, type){
+  el.className = 'form-msg ' + type;
+  el.textContent = text;
+  if(type === 'ok') setTimeout(()=>{ el.className = 'form-msg'; }, 4500);
+}
+function genOrderCode(){
+  const L = 'ABCDEFGHJKLMNPQRSTUVWXYZ', D = '0123456789';
+  let a = '', b = '';
+  for(let i=0;i<3;i++) a += L[Math.floor(Math.random()*L.length)];
+  for(let i=0;i<4;i++) b += D[Math.floor(Math.random()*D.length)];
+  return a + '-' + b;
+}
+function openModal(id){ document.getElementById(id).classList.add('show'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); document.body.style.overflow=''; }
 </script>
-</body>
-</html>
